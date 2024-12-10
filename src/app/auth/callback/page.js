@@ -1,7 +1,6 @@
 "use client";
-
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Home() {
   const clientId = process.env.CLIENT_ID;
