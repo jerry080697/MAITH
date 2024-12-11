@@ -10,7 +10,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body
-        className={`w-screen h-screen`}
       >
         {children}
       </body>

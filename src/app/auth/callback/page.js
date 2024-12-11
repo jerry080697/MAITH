@@ -24,7 +24,14 @@ export default function Home() {
 
   useEffect(() => {
     if (accessToken) {
-      console.log('accessToken', accessToken);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('accessToken', accessToken);
+      }
+
+      const search = new URLSearchParams(location.search);
+      const redirect_uri = search.get('redirect_uri') || '/';
+
+      location.href = redirect_uri;
     }
   }, [accessToken]);
 
