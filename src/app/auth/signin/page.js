@@ -11,7 +11,7 @@ export default function Home() {
     search.set('client_id', clientId)
     search.set('scope', 'openid email profile')
     search.set('response_type', 'code')
-    search.set('redirect_uri', 'https://maith-frontend.pages.dev/auth/callback')
+    search.set('redirect_uri', location.protocol + '//' + location.host + '/auth/callback')
 
     location.href = 'https://accounts.google.com/o/oauth2/v2/auth?'+search.toString()
   }, [])

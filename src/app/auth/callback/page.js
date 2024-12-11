@@ -8,18 +8,20 @@ export default function Home() {
 
   const [accessToken, setAccessToken] = useState(null);
 
-  useEffect(async () => {
-    const code = new URLSearchParams(location.search).get('code')
+  useEffect(() => {
+    (async () => {
+      const code = new URLSearchParams(location.search).get('code')
     
-    const form = new FormData();
-    form.append('code', code);
-    form.append('client_id', clientId);
-    form.append('client_secret', clientSecret);
-    form.append('redirect_uri', 'https://maith-frontend.pages.dev/auth/callback');
-    form.append('grant_type', 'authorization_code');
-
-    const res = await axios.post("https://oauth2.googleapis.com/token", form);
-    setAccessToken(res.data.access_token);
+      const form = new FormData();
+      form.append('code', code);
+      form.append('client_id', clientId);
+      form.append('client_secret', clientSecret);
+      search.set('redirect_uri', location.protocol + '//' + location.host + '/auth/callback');
+      form.append('grant_type', 'authorization_code');
+  
+      const res = await axios.post("https://oauth2.googleapis.com/token", form);
+      setAccessToken(res.data.access_token);
+    })();
   }, []);
 
   useEffect(() => {
