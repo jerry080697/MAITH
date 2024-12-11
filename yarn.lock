@@ -1093,6 +1093,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "commander@npm:8.3.0"
+  checksum: 10c0/8b043bb8322ea1c39664a1598a95e0495bfe4ca2fad0d84a92d7d1d8d213e2a155b441d2470c8e08de7c4a28cf2bc6e169211c49e1b21d9f7edc6ae4d9356060
+  languageName: node
+  linkType: hard
+
 "concat-map@npm:0.0.1":
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
@@ -2611,6 +2618,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"katex@npm:^0.16.0":
+  version: 0.16.15
+  resolution: "katex@npm:0.16.15"
+  dependencies:
+    commander: "npm:^8.3.0"
+  bin:
+    katex: cli.js
+  checksum: 10c0/bf1f553c7368821228c22d2cef61672fbaed96388226e27df1422925f8676502267343bcbad1fe4657d729390062c1009ac5fac952e987bc60531ce675049f84
+  languageName: node
+  linkType: hard
+
 "keyv@npm:^4.5.3":
   version: 4.5.4
   resolution: "keyv@npm:4.5.4"
@@ -2705,6 +2723,7 @@ __metadata:
     postcss: "npm:^8"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
+    react-latex-next: "npm:^3.0.0"
     tailwindcss: "npm:^3.4.1"
   languageName: unknown
   linkType: soft
@@ -3397,6 +3416,18 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 10c0/33977da7a5f1a287936a0c85639fec6ca74f4f15ef1e59a6bc20338fc73dc69555381e211f7a3529b8150a1f71e4225525b41b60b52965bda53ce7d47377ada1
+  languageName: node
+  linkType: hard
+
+"react-latex-next@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "react-latex-next@npm:3.0.0"
+  dependencies:
+    katex: "npm:^0.16.0"
+  peerDependencies:
+    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/ab34bad39931aadaeb05e1fa50b0ba1f80c81555d7e8e09c142e456de312a1011018afd7694eefee02c36cd92b06330d6266c6cd61e1affd84aa13d518d7c986
   languageName: node
   linkType: hard
 
