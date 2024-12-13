@@ -53,7 +53,7 @@ export default function Home() {
       const token = localStorage.getItem("accessToken");
       console.log("로컬 스토리지에서 가져온 토큰:", token); // 토큰 로그
       if (!token) {
-        location.href = "/auth/signin";
+        location.href = "/auth/signin?redirect_uri=" + encodeURIComponent(location.href);
       } else {
         setAccessToken(token);
       }

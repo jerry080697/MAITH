@@ -12,6 +12,7 @@ export default function Home() {
     search.set('scope', 'openid email profile')
     search.set('response_type', 'code')
     search.set('redirect_uri', location.protocol + '//' + location.host + '/auth/callback')
+    search.set('state', JSON.stringify({ redirect_uri: location.search.get('redirect_uri') || '' }))
 
     location.href = 'https://accounts.google.com/o/oauth2/v2/auth?'+search.toString()
   }, []);

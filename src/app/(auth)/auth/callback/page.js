@@ -31,7 +31,11 @@ export default function Home() {
       }
 
       const search = new URLSearchParams(location.search);
-      const redirect_uri = search.get('redirect_uri') || '/';
+      let redirect_uri = '/';
+      try {
+        const state = JSON.parse(search.get('state'));
+        redirect_uri = state.redirect_uri || '/';
+      } catch (e) {}
 
       location.href = redirect_uri;
     }
