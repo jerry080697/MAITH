@@ -2,7 +2,7 @@
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen p-8">
+        <div className="min-h-screen py-8">
             {/* Header */}
             <header className="text-center mb-12">
                 <h1 className="text-5xl font-bold text-blue-600">M<span className="bg-gradient-to-br text-transparent bg-clip-text from-blue-600 via-green-500 to-indigo-400">AI</span>TH: <span className="bg-gradient-to-br text-transparent bg-clip-text from-blue-600 via-green-500 to-indigo-400">AI</span> 기반 수학 문제 플랫폼</h1>
