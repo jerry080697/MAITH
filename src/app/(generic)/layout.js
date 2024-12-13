@@ -89,7 +89,7 @@ export default function GenericLayout({ children }) {
       <footer>
         <div className="flex max-w-screen-xl mx-auto justify-between gap-8 px-4">
           <div className="flex flex-col gap-2">
-            <Logo className="h-16 w-24 w-fit opacity-20" />
+            <Logo className="h-16 w-24 opacity-20" />
             <p className="opacity-70">© 2024 MAITH. All rights reserved.</p>
           </div>
           <div className='flex justify-end gap-2 shrink-0'>
