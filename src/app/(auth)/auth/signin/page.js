@@ -8,11 +8,13 @@ export default function Home() {
 
   useEffect(() => {
     const search = new URLSearchParams();
+    const thisSearch = new URLSearchParams(location.search);
+
     search.set('client_id', clientId)
     search.set('scope', 'openid email profile')
     search.set('response_type', 'code')
     search.set('redirect_uri', location.protocol + '//' + location.host + '/auth/callback')
-    search.set('state', JSON.stringify({ redirect_uri: location.search.get('redirect_uri') || '' }))
+    search.set('state', JSON.stringify({ redirect_uri: thisSearch.get('redirect_uri') || '' }))
 
     location.href = 'https://accounts.google.com/o/oauth2/v2/auth?'+search.toString()
   }, []);
