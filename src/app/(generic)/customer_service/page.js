@@ -7,17 +7,19 @@ export default function CustomerSupport() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-            <h1 className="text-4xl font-bold mb-6 text-gray-800">고객센터</h1>
-            <p className="text-lg text-gray-600 mb-4">
-                질문사항이나 건의사항이 있으시면 아래 버튼을 눌러 Google 폼으로 이동해주세요.
-            </p>
-            <button
-                onClick={handleFormRedirect}
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg text-lg hover:bg-blue-600 transition"
-            >
-                Google 폼으로 이동하기
-            </button>
+        <div className="min-h-[calc(100dvh-12rem)] flex items-center justify-center">
+            <div className="flex flex-col justify-center items-center">
+                <h1 className="text-4xl font-bold mb-6">고객센터</h1>
+                <p className="text-lg text-gray-600 mb-4">
+                    질문사항이나 건의사항이 있으시면 아래 버튼을 눌러 Google 폼으로 이동해주세요.
+                </p>
+                <button
+                    onClick={handleFormRedirect}
+                    className="px-6 py-3 bg-blue-500 text-white rounded-lg text-lg hover:bg-blue-600 transition"
+                >
+                    Google 폼으로 이동하기
+                </button>
+            </div>
         </div>
     );
 }

@@ -8,12 +8,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #282828;
+  --secondary: #6b6b6b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #dcdcdc;
+    --secondary: #a8a8a8;
   }
 }
 
@@ -29,4 +33,12 @@ body {
 
 .stroke-current {
   stroke: var(--foreground);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-secondary {
+  color: var(--secondary);
 }
