@@ -56,7 +56,7 @@ export default function GenericLayout({ children }) {
       <header className="bg-zinc-800 text-white p-2 px-4">
         <div className="flex max-w-screen-xl mx-auto justify-between gap-8">
           <nav className="flex gap-4 md:gap-8">
-            <Link href="/"><Logo className="h-10 w-fit" /></Link>
+            <Link href="/"><Logo className="h-10 w-14" /></Link>
             <ul className="flex gap-2 items-center">
               <NavItem icon="fas fa-home" href="/">홈</NavItem>
               <NavItem icon="fas fa-clipboard-question" href="/">문제 생성</NavItem>
@@ -89,7 +89,7 @@ export default function GenericLayout({ children }) {
       <footer>
         <div className="flex max-w-screen-xl mx-auto justify-between gap-8 px-4">
           <div className="flex flex-col gap-2">
-            <Logo className="h-16 w-fit opacity-20" />
+            <Logo className="h-16 w-24 w-fit opacity-20" />
             <p className="opacity-70">© 2024 MAITH. All rights reserved.</p>
           </div>
           <div className='flex justify-end gap-2 shrink-0'>
