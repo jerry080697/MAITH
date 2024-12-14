@@ -58,7 +58,7 @@ export default function GenericLayout({ children }) {
           <nav className="flex gap-4 md:gap-8">
             <Link href="/"><Logo className="h-10 w-14" /></Link>
             <ul className="flex gap-2 items-center">
-              <NavItem icon="fas fa-home" href="/">홈</NavItem>
+              <NavItem icon="fas fa-bell" href="/announcement">공지사항</NavItem>
               <NavItem icon="fas fa-clipboard-question" href="/">문제 생성</NavItem>
             </ul>
           </nav>
@@ -92,9 +92,10 @@ export default function GenericLayout({ children }) {
             <Logo className="h-16 w-24 opacity-20" />
             <p className="opacity-70">© 2024 MAITH. All rights reserved.</p>
           </div>
-          <div className='flex justify-end gap-2 shrink-0'>
+          <div className='flex flex-col items-end md:flex-row md:items-center justify-end gap-2 shrink-0'>
             <Link href="/policy/terms" className="text-sm text-zinc-500 transition hover:text-blue-700">이용약관</Link>
             <Link href="/policy/privacy" className="text-sm text-zinc-500 transition hover:text-blue-700">개인정보 처리방침</Link>
+            <Link href="/customer_service" className="text-sm text-zinc-500 transition hover:text-blue-700">고객지원</Link>
           </div>
         </div>
       </footer>
