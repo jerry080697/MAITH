@@ -10,6 +10,8 @@
   --foreground: #171717;
   --primary: #282828;
   --secondary: #6b6b6b;
+  --bg-primary: #dcdcdc;
+  --bg-secondary: #cbcbcb;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,6 +20,8 @@
     --foreground: #ededed;
     --primary: #dcdcdc;
     --secondary: #a8a8a8;
+    --bg-primary: #282828;
+    --bg-secondary: #393939;
   }
 }
 
@@ -35,10 +39,20 @@ body {
   stroke: var(--foreground);
 }
 
-.text-primary {
-  color: var(--primary);
-}
+@layer components {
+  .text-primary {
+    color: var(--primary);
+  }
+  
+  .text-secondary {
+    color: var(--secondary);
+  }
+  
+  .bg-primary {
+    background: var(--bg-primary);
+  }
 
-.text-secondary {
-  color: var(--secondary);
+  .bg-secondary {
+    background: var(--bg-secondary);
+  }
 }

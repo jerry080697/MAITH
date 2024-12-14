@@ -53,7 +53,7 @@ export default function GenericLayout({ children }) {
 
   return (
     <>
-      <header className="bg-zinc-800 text-white p-2 px-4">
+      <header className="bg-primary p-2 px-4">
         <div className="flex max-w-screen-xl mx-auto justify-between gap-8">
           <nav className="flex gap-4 md:gap-8">
             <Link href="/"><Logo className="h-10 w-14" /></Link>
@@ -64,7 +64,7 @@ export default function GenericLayout({ children }) {
           </nav>
 
           <div className='flex items-center'>
-            {userInfo ? <div className="relative flex gap-2 items-center transition hover:bg-zinc-700 py-1 px-2 rounded-full md:rounded-md cursor-pointer" onClick={() => setMenuOpen(e => !e)}>
+            {userInfo ? <div className="relative flex gap-2 items-center transition hover:bg-secondary py-1 px-2 rounded-full md:rounded-md cursor-pointer" onClick={() => setMenuOpen(e => !e)}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={userInfo.picture ?? 'https://via.placeholder.com/150'} alt={userInfo.name} className="h-8 w-8 rounded-full" />
               <span className="text-md hidden md:block">{userInfo.name}</span>
@@ -72,8 +72,8 @@ export default function GenericLayout({ children }) {
                 { menuOpen ? <i className='fas fa-chevron-up'></i> : <i className='fas fa-chevron-down'></i>}
               </span>
 
-              {menuOpen && <ul className="absolute flex flex-col items-center top-14 right-0 bg-zinc-800 text-white p-1 w-36 rounded-lg">
-                <li className="flex gap-2 justify-center w-full py-1 px-4 rounded-md transition items-center bg-zinc-800 hover:bg-zinc-700 cursor-pointer" onClick={() => signOut()}>
+              {menuOpen && <ul className="absolute flex flex-col items-center top-14 right-0 bg-primary p-1 w-36 rounded-lg">
+                <li className="flex gap-2 justify-center w-full py-1 px-4 rounded-md transition items-center bg-primary hover:bg-secondary cursor-pointer" onClick={() => signOut()}>
                   <i className="fas fa-right-from-bracket"></i>
                   <span>로그아웃</span>
                 </li>
