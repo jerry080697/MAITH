@@ -5,7 +5,8 @@ import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import axios from "axios";
 
-axios.defaults.baseURL = "https://mathai.kro.kr:4434"; // 기본 API URL 설정
+// axios.defaults.baseURL = "https://mathai.kro.kr:4434"; // 기본 API URL 설정
+axios.defaults.baseURL = "https://mathai.kro.kr"; // 기본 API URL 설정
 
 export default function Home() {
   const [accessToken, setAccessToken] = useState(null);
