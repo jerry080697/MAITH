@@ -76,7 +76,7 @@ export default function NoticePage() {
   // 컴포넌트가 마운트될 때 공지사항을 API에서 가져옵니다.
   useEffect(() => {
     axios
-      .get("http://mathai.kro.kr:4434/api/announcements")
+      .get("https://mathai.kro.kr:4434/api/announcements")
       .then((response) => {
         // 서버 응답값을 로그로 출력
         console.log("공지사항 데이터:", response.data);
