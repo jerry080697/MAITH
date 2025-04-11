@@ -36,7 +36,22 @@ export default function Home() {
       );
   
       console.log("서버 응답 성공:", response.data);
-      setResponseText(response.data); // 응답 데이터를 직접 사용
+      const data = response.data;
+      console.log('data', data);
+      if (data.includes('model') && data.startsWith('"') && data.endsWith('"')) {
+        const jsonString = JSON.parse(data);
+        console.log("Parsed JSON:", jsonString); // 파싱된 JSON 확인
+
+        const lineSeparatedJson = jsonString.split('\n').filter(n => n.trim() !== '').map(n => JSON.parse(n));
+        console.log("Parsed JSON:", lineSeparatedJson); // 파싱된 JSON 확인
+
+        const testParsed = lineSeparatedJson.map(n => n.response).reduce((a,b) => a+b, '').trim();
+        console.log("Parsed response:", testParsed);  
+
+        setResponseText(testParsed); // 파싱된 응답 사용
+      } else {
+        setResponseText(response.data); // 응답 데이터를 직접 사용
+      }
     } catch (error) {
       console.error("서버 응답 실패:", error.response?.data || error.message);
       alert(`문제 생성에 실패했습니다: ${error.message}`);
