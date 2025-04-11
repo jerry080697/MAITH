@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getStrapiClient } from "@/lib/api";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export default function NoticePage() {
   const [notices, setNotices] = useState([]);
@@ -58,9 +59,7 @@ export default function NoticePage() {
             <h2 className="text-2xl font-bold mb-4">{selectedNotice.title}</h2>
             <p className="text-sm text-gray-500 mb-2">{selectedNotice.date}</p>
 
-            { selectedNotice.content.map((item, index) => (
-              <p className="text-base" key={index}>{item.text}</p>
-            ))}
+            <BlocksRenderer content={selectedNotice.content} />
           </div>
         </div>
       )}
