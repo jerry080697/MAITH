@@ -4,139 +4,95 @@ import { useEffect, useState } from "react";
 import 'katex/dist/katex.min.css';
 import Latex from 'react-latex-next';
 import axios from "axios";
+import { getAuthenticatedMaithAPI } from "@/lib/api";
 
-// axios.defaults.baseURL = "https://mathai.kro.kr:4434"; // 기본 API URL 설정
-axios.defaults.baseURL = "https://mathai.kro.kr"; // 기본 API URL 설정
 
 export default function Home() {
-  const [accessToken, setAccessToken] = useState(null);
-  const [questionData, setQuestionData] = useState({ difficulty: "", topic: "", num_problems: 1 });
-  const [problems, setProblems] = useState([]);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [prompt, setPrompt] = useState("");
+  const [responseText, setResponseText] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setQuestionData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handlePromptChange = (e) => {
+    setPrompt(e.target.value);
   };
 
   const handleSubmit = async () => {
-    console.log("요청 데이터:", questionData);
+    if (!prompt) {
+      alert("프롬프트를 입력해주세요.");
+      return;
+    }
+  
+    setLoading(true);
+    setResponseText(""); // 이전 응답 초기화
+
     try {
+      const axios = getAuthenticatedMaithAPI();
       const response = await axios.post(
         "/api/problems/generate",
-        questionData,
+        { prompt },
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
+          responseType: "text", // 'stream' 대신 'text' 사용
         }
       );
+  
+      console.log("서버 응답 성공:", response.data);
+      const data = response.data;
+      console.log('data', data);
+      if (data.includes('model') && data.startsWith('"') && data.endsWith('"')) {
+        const jsonString = JSON.parse(data);
+        console.log("Parsed JSON:", jsonString); // 파싱된 JSON 확인
 
-      console.log("서버 응답 성공:", response.data)
-      setProblems(response.data.problems);
-      setSelectedAnswer(null);
+        const lineSeparatedJson = jsonString.split('\n').filter(n => n.trim() !== '').map(n => JSON.parse(n));
+        console.log("Parsed JSON:", lineSeparatedJson); // 파싱된 JSON 확인
+
+        const testParsed = lineSeparatedJson.map(n => n.response).reduce((a,b) => a+b, '').trim();
+        console.log("Parsed response:", testParsed);  
+
+        setResponseText(testParsed); // 파싱된 응답 사용
+      } else {
+        setResponseText(response.data); // 응답 데이터를 직접 사용
+      }
     } catch (error) {
       console.error("서버 응답 실패:", error.response?.data || error.message);
+      alert(`문제 생성에 실패했습니다: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const handleShowAnswer = (answer) => {
-    console.log("선택된 정답:", answer);
-    setSelectedAnswer(answer);
-  };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
-      console.log("로컬 스토리지에서 가져온 토큰:", token); // 토큰 로그
-      if (!token) {
-        location.href = "/auth/signin?redirect_uri=" + encodeURIComponent(location.href);
-      } else {
-        setAccessToken(token);
-      }
-    }
-  }, []);
+  };  
 
   return (
     <>
       <div className="my-4">
-        <label htmlFor="difficulty" className="block text-lg font-medium">
-          난이도를 입력해주세요:
+        <label htmlFor="prompt" className="block text-lg font-medium">
+          생성하고 싶은 문제를 입력해주세요:
         </label>
         <input
-          id="difficulty"
-          name="difficulty"
-          value={questionData.difficulty}
-          onChange={handleInputChange}
-          placeholder="e.g., medium"
+          id="prompt"
+          name="prompt"
+          value={prompt}
+          onChange={handlePromptChange}
+          placeholder="예: 간단한 수학 문제를 생성해줘"
           className="mt-2 p-2 border rounded w-full text-black placeholder-gray-500"
-        />
-
-        <label htmlFor="topic" className="block text-lg font-medium mt-4">
-          원하는 문제의 주제를 입력해주세요:
-        </label>
-        <input
-          id="topic"
-          name="topic"
-          value={questionData.topic}
-          onChange={handleInputChange}
-          placeholder="e.g., algebra"
-          className="mt-2 p-2 border rounded w-full text-black placeholder-gray-500"
-        />
-
-        <label htmlFor="num_problems" className="block text-lg font-medium mt-4">
-          원하는 문제 개수를 입력해주세요:
-        </label>
-        <input
-          id="num_problems"
-          name="num_problems"
-          type="number"
-          value={questionData.num_problems}
-          onChange={handleInputChange}
-          className="mt-2 p-2 border rounded w-full text-black"
         />
 
         <button
           onClick={handleSubmit}
           className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          disabled={loading}
         >
-          문제 생성
+          {loading ? "생성 중..." : "문제 생성"}
         </button>
       </div>
 
-      <div className="my-4">
-        <h2 className="text-lg font-medium">생성된 문제:</h2>
-        {problems.map((problem) => (
-          <div
-            key={problem.id}
-            className="mt-4 p-4 border rounded bg-white text-black"
-          >
-            <Latex>{problem.question}</Latex>
-            <button
-              onClick={() => handleShowAnswer(problem.answer)}
-              className="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-            >
-              정답 확인
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {selectedAnswer && (
+      {responseText && (
         <div className="my-4">
-          <h2 className="text-lg font-medium">정답:</h2>
-          <div
-            className="mt-2 p-4 border rounded bg-white text-black"
-            style={{ whiteSpace: "pre-wrap" }}
-          >
-            <Latex>{selectedAnswer}</Latex>
+          <h2 className="text-lg font-medium">생성된 문제:</h2>
+          <div className="mt-2 p-4 border rounded bg-white text-black">
+            <Latex>{responseText}</Latex>
           </div>
         </div>
       )}
     </>
   );
 }
+

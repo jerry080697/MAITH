@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@strapi/blocks-react-renderer": "^1.0.2",
     "axios": "^1.7.9",
     "next": "15.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-latex-next": "^3.0.0"
+    "react-latex-next": "^3.0.0",
+    "strapi-sdk-js": "^3.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
