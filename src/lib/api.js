@@ -34,3 +34,20 @@ export function getStrapiClient() {
     res.setToken(process.env.NEXT_PUBLIC_STRAPI_TOKEN || '');
     return res;
 }
+
+export async function getStrapiAuthenticatedClient(accessToken) {
+    const endpoint = process.env.NEXT_PUBLIC_STRAPI_URL || 'https://maith-cms.alex4386.me'
+    const res = new Strapi({
+        url: endpoint,
+    });
+    
+    if (!accessToken) throw new Error('Not Authenticated');
+    const axios = require('axios');
+
+    const googleRes = await axios.post(`${endpoint}/auth/google`, {
+        access_token: accessToken,
+    }).then((response) => response.data);
+
+    res.setToken(googleRes.jwt);
+    return res;
+}

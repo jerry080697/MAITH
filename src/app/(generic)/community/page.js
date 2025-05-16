@@ -1,46 +1,55 @@
 'use client';
 
-import { useState } from "react";
-
-const dummyPosts = [
-  { id: 1, title: "게시글 제목 1", content: "게시글 내용 1", author: "user1", createdAt: "2024-03-10" },
-  { id: 2, title: "게시글 제목 2", content: "게시글 내용 2", author: "user2", createdAt: "2024-03-11" },
-  { id: 3, title: "게시글 제목 3", content: "게시글 내용 3", author: "user3", createdAt: "2024-03-12" },
-  { id: 4, title: "게시글 제목 4", content: "게시글 내용 4", author: "user4", createdAt: "2024-03-13" },
-  { id: 5, title: "게시글 제목 5", content: "게시글 내용 5", author: "user5", createdAt: "2024-03-14" },
-  { id: 6, title: "게시글 제목 6", content: "게시글 내용 6", author: "user6", createdAt: "2024-03-15" },
-  { id: 7, title: "게시글 제목 7", content: "게시글 내용 7", author: "user7", createdAt: "2024-03-16" },
-  { id: 8, title: "게시글 제목 8", content: "게시글 내용 8", author: "user8", createdAt: "2024-03-17" },
-  { id: 9, title: "게시글 제목 9", content: "게시글 내용 9", author: "user9", createdAt: "2024-03-18" },
-  { id: 10, title: "게시글 제목 10", content: "게시글 내용 10", author: "user10", createdAt: "2024-03-19" },
-  { id: 11, title: "게시글 제목 11", content: "게시글 내용 11", author: "user11", createdAt: "2024-03-20" },
-  { id: 12, title: "게시글 제목 12", content: "게시글 내용 12", author: "user12", createdAt: "2024-03-21" },
-  { id: 13, title: "게시글 제목 13", content: "게시글 내용 13", author: "user13", createdAt: "2024-03-22" },
-  { id: 14, title: "게시글 제목 14", content: "게시글 내용 14", author: "user14", createdAt: "2024-03-23" },
-  { id: 15, title: "게시글 제목 15", content: "게시글 내용 15", author: "user15", createdAt: "2024-03-24" },
-  { id: 16, title: "게시글 제목 16", content: "게시글 내용 16", author: "user16", createdAt: "2024-03-25" },
-  { id: 17, title: "게시글 제목 17", content: "게시글 내용 17", author: "user17", createdAt: "2024-03-26" },
-  { id: 18, title: "게시글 제목 18", content: "게시글 내용 18", author: "user18", createdAt: "2024-03-27" },
-  { id: 19, title: "게시글 제목 19", content: "게시글 내용 19", author: "user19", createdAt: "2024-03-28" },
-  { id: 20, title: "게시글 제목 20", content: "게시글 내용 20", author: "user20", createdAt: "2024-03-29" },
-];
+import { getStrapiAuthenticatedClient, getStrapiClient } from "@/lib/api";
+import { use, useEffect, useState } from "react";
 
 export default function CommunityPage() {
-  const [posts, setPosts] = useState(dummyPosts);
+  const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
-  const [newPost, setNewPost] = useState({ title: "", content: "", author: "" });
+  const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [isCreatingPost, setIsCreatingPost] = useState(false);
 
+  useEffect(() => {
+    fetchPosts();
+
+    return () => {};
+  });
+
+  const fetchPosts = async () => {
+    const strapi = getStrapiClient();
+    strapi.find('posts', {
+      sort: 'createdAt:desc',
+    })
+      .then((response) => {
+        console.log("커뮤니티 데이터:", response);
+        setNotices(response.data.map(announcement => ({
+          id: announcement.id,
+          title: announcement.title,
+          date: new Date(announcement.createdAt).toLocaleDateString('ko-KR'),
+          content: announcement.content
+        })));
+      })
+      .catch((error) => {
+        console.error("커뮤니티 데이터를 가져오는 중 오류 발생:", error);
+      });
+  };
+
   // 새 게시글 추가 함수
-  const addNewPost = () => {
-    const newPostData = {
-      ...newPost,
-      id: posts.length + 1,
-      createdAt: new Date().toISOString(),
-    };
-    setPosts([newPostData, ...posts]); // 새 게시글을 맨 앞에 추가
-    setNewPost({ title: "", content: "", author: "" }); // 입력 필드 초기화
-    setIsCreatingPost(false); // 게시글 작성 상태 종료
+  const addNewPost = async () => {
+    setIsCreatingPost(true);
+
+    const accessToken = localStorage.getItem('accessToken');
+    const strapi = getStrapiAuthenticatedClient(accessToken);
+
+    try {
+      const response = await strapi.create('posts', {
+        ...newPost,
+      });
+    } catch(e) {
+      console.error("게시글 작성 중 오류 발생:", e);
+    } finally {
+      setIsCreatingPost(false); // 게시글 작성 상태 종료
+    }
   };
 
   return (
