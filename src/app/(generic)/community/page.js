@@ -22,7 +22,7 @@ export default function CommunityPage() {
     })
       .then((response) => {
         console.log("커뮤니티 데이터:", response);
-        setNotices(response.data.map(announcement => ({
+        setPosts(response.data.map(announcement => ({
           id: announcement.id,
           title: announcement.title,
           date: new Date(announcement.createdAt).toLocaleDateString('ko-KR'),
@@ -124,15 +124,6 @@ export default function CommunityPage() {
                 onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
                 className="w-full p-4 border border-gray-300 rounded-lg"
                 rows="4"
-              />
-            </div>
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="작성자"
-                value={newPost.author}
-                onChange={(e) => setNewPost({ ...newPost, author: e.target.value })}
-                className="w-full p-4 border border-gray-300 rounded-lg"
               />
             </div>
             <div className="flex justify-between">
