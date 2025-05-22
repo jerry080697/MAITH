@@ -44,7 +44,7 @@ export async function getStrapiAuthenticatedClient(accessToken) {
     if (!accessToken) throw new Error('Not Authenticated');
     const axios = require('axios');
 
-    const googleRes = await axios.post(`${endpoint}/auth/google`, {
+    const googleRes = await axios.post(`${endpoint}/api/auth/google`, {
         access_token: accessToken,
     }).then((response) => response.data);
 
