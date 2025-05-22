@@ -39,7 +39,7 @@ export default function CommunityPage() {
     setIsCreatingPost(true);
 
     const accessToken = localStorage.getItem('accessToken');
-    const strapi = getStrapiAuthenticatedClient(accessToken);
+    const strapi = await getStrapiAuthenticatedClient(accessToken);
 
     try {
       const response = await strapi.create('posts', {
